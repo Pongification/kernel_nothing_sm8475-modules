@@ -4789,6 +4789,9 @@ int dsi_panel_set_lp1(struct dsi_panel *panel)
 		finger_hbm_flag = 0;
 	}
 
+	/* Illumination must be re-established after leaving normal display mode. */
+	dsi_panel_set_fod_ui(panel, false);
+
 exit:
 	mutex_unlock(&panel->panel_lock);
 	return rc;
@@ -4815,6 +4818,9 @@ int dsi_panel_set_lp2(struct dsi_panel *panel)
 	if (finger_hbm_flag == 1) {
 		finger_hbm_flag = 0;
 	}
+
+	/* Illumination must be re-established after leaving normal display mode. */
+	dsi_panel_set_fod_ui(panel, false);
 
 exit:
 	mutex_unlock(&panel->panel_lock);
@@ -5292,6 +5298,9 @@ int dsi_panel_disable(struct dsi_panel *panel)
 	if (finger_hbm_flag == 1) {
 		finger_hbm_flag = 0;
 	}
+
+	/* Illumination must be re-established after leaving normal display mode. */
+	dsi_panel_set_fod_ui(panel, false);
 
 	mutex_unlock(&panel->panel_lock);
 	return rc;
